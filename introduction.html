@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới thiệu - Kingdom Sport</title>
+    <link rel="icon" type="image/png" href="image/logo 2.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body { 
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Navigation styles - giống trang chủ */
+        nav { 
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(47, 45, 45, 0.95);
+            padding: 15px 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav ul { 
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        nav li { 
+            margin-right: 25px;
+            position: relative;
+        }
+
+        nav a { 
+            color: #fff;
+            text-decoration: none;
+            font-size: 16px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        nav a:hover { 
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .dropdown { 
+            display: none;
+            position: absolute;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            min-width: 200px;
+            top: 100%;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .dropdown a { 
+            display: block;
+            color: #333;
+            padding: 12px 20px;
+            border-radius: 8px;
+            margin: 5px;
+        }
+
+        .dropdown a:hover { 
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        li:hover .dropdown { 
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        .sub-dropdown { 
+            display: none;
+            position: absolute;
+            left: 100%;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            min-width: 180px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            backdrop-filter: blur(10px);
+            padding: 60px 20px;
+            margin: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        header .subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            font-weight: 300;
+        }
+
+        /* Main content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .intro-section {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            margin: 30px;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .intro-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+            margin-bottom: 50px;
+        }
+
+        .intro-text h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .intro-text p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .intro-image {
+            text-align: center;
+        }
+
+        .intro-image img {
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        /* 4S Values */
+        .values-section {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            padding: 40px;
+            border-radius: 20px;
+            margin: 30px 0;
+        }
+
+        .values-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: #333;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .value-card {
+            background: rgba(255,255,255,0.9);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .value-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .value-card h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .value-card p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* Company info */
+        .company-info {
+            background: rgba(255,255,255,0.95);
+            padding: 50px;
+            border-radius: 20px;
+            margin: 30px 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .info-card {
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05), rgba(118, 75, 162, 0.05));
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+        }
+
+        .info-card h3 {
+            color: #333;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .info-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        /* Hotline buttons - giống trang chủ */
+        .hotline-btn {
+            position: fixed;
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 20px;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s;
+            left: 20px;
+        }
+
+        .hotline-btn img {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+
+        .hotline-btn.phone {
+            bottom: 20px;
+            background: #e53935;
+            animation: phonePulse 1.5s infinite;
+        }
+
+        .hotline-btn.zalo {
+            bottom: 80px;
+            background: #06C;
+            animation: zaloPulse 2s infinite;
+        }
+
+        @keyframes phonePulse {
+            0% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(229, 57, 53, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(229, 57, 53, 0); }
+        }
+
+        @keyframes zaloPulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 102, 204, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(0, 102, 204, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 102, 204, 0); }
+        }
+
+        .hotline-btn:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .intro-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .values-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header h1 {
+                font-size: 2.5rem;
+            }
+            
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="index.html">Trang chủ</a></li>
+            <li><a href="introduction.html">Giới thiệu</a></li>
+            <li>
+                <a href="#">Sản phẩm</a>
+                <ul class="dropdown">
+                    <li><a href="#" onclick="filterCategory('featured')">Dụng cụ nổi bật</a></li>
+                    <li><a href="#" onclick="filterCategory('yoga')">Dụng cụ Yoga</a></li>
+                    <li>
+                        <a href="#">Môn thể thao ▾</a>
+                        <ul class="sub-dropdown">
+                            <li><a href="#" onclick="filterCategory('badminton')">Cầu lông</a></li>
+                            <li><a href="#" onclick="filterCategory('football')">Bóng đá</a></li>
+                            <li><a href="#" onclick="filterCategory('tabletennis')">Bóng bàn</a></li>
+                            <li><a href="#" onclick="filterCategory('volleyball')">Bóng chuyền</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            <li><a href="khuyenmai.html">Khuyến mãi</a></li>
+            <li><a href="lienhe.html">Liên hệ</a></li>
+            <li class="cart-icon">
+                🛒 <a href="cart.html">Giỏ hàng <span id="cart-count"></span></a>
+            </li>
+            <li><a href="login.html">Đăng nhập</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>👑 KINGDOM SPORT</h1>
+        <p class="subtitle">Đồng hành cùng đam mê thể thao của bạn</p>
+    </header>
+
+    <div class="container">
+        <div class="intro-section">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2>Về Chúng Tôi</h2>
+                    <p>Các hoạt động của KINGDOM SPORT sẽ không ngừng phát triển. Chất lượng sản phẩm và dịch vụ thể thao của chúng tôi không nằm ngoài mục đích đem lại cho mọi người sự hăng say và một sức mới trong cuộc sống.</p>
+                    <p>KINGDOM SPORT bắt đầu thành lập năm 2008, chúng tôi đến với lĩnh vực thể thao bằng tất cả nhiệt huyết vào các môn Bóng đá, Tennis, Cầu lông,... Cùng với dịch vụ in ấn chuyên nghiệp trên mọi chất liệu được chúng tôi áp dụng với các công nghệ mới nhất hiện nay.</p>
+                </div>
+                <div class="intro-image">
+                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Kingdom Sport Team">
+                </div>
+            </div>
+
+            <div class="values-section">
+                <h2 class="values-title">Triết Lý 4S của Kingdom Sport</h2>
+                <div class="values-grid">
+                    <div class="value-card">
+                        <div class="value-icon">⚡</div>
+                        <h3>Speed - Tốc Độ</h3>
+                        <p>Phục vụ nhanh chóng, giao hàng tận nơi, đáp ứng kịp thời mọi nhu cầu của khách hàng</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">💪</div>
+                        <h3>Strong - Mạnh Mẽ</h3>
+                        <p>Sản phẩm chất lượng cao, bền bỉ, giúp bạn thể hiện sức mạnh trong mọi hoạt động thể thao</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">🏆</div>
+                        <h3>Success - Thành Công</h3>
+                        <p>Đồng hành cùng bạn trên con đường chinh phục mọi mục tiêu và đạt được thành công</p>
+                    </div>
+                    <div class="value-card">
+                        <div class="value-icon">✨</div>
+                        <h3>Style - Phong Cách</h3>
+                        <p>Thiết kế hiện đại, thời trang, giúp bạn tự tin thể hiện phong cách riêng</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="company-info">
+            <div class="info-grid">
+                <div class="info-card">
+                    <h3>🎯 Sứ Mệnh</h3>
+                    <p>KINGDOM SPORT đã có hơn 15 năm trong lĩnh vực cung cấp các mặt hàng thời trang thể thao và là thương hiệu uy tín được đông đảo khách hàng ủng hộ. Chúng tôi tin rằng sẽ là người bạn đồng hành cùng các bạn trên con đường chinh phục 4S.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🌟 Chất Lượng</h3>
+                    <p>Nguồn cung cấp hàng chủ yếu là những công ty uy tín và thương hiệu hàng đầu tại Việt Nam nên quý khách hàng có thể yên tâm hoàn toàn trong quá trình sử dụng. Khách hàng đã và đang sử dụng sản phẩm, dịch vụ của KINGDOM SPORT là những khách hàng thân thuộc và gắn bó lâu dài.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🛍️ Sản Phẩm</h3>
+                    <p>Hiện tại, KINGDOM SPORT đang cung cấp áo đá banh nam nữ (hàng có sẵn và đặt hàng), giày thể thao các loại, các máy tập thể thao, đồ cầu lông,... với giá cả cạnh tranh và chất lượng đảm bảo.</p>
+                </div>
+                <div class="info-card">
+                    <h3>🤝 Cam Kết</h3>
+                    <p><strong>Với khách hàng:</strong> KINGDOM SPORT là sự lựa chọn cân bằng về giá cả và chất lượng.<br><br><strong>Với nhà cung cấp:</strong> KINGDOM SPORT là đối tác thành công và tin cậy.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hotline-buttons">
+        <a href="https://zalo.me/0762688939" target="_blank" class="hotline-btn zalo">
+            <img src="image/zalo.png" alt="Zalo"> 0898413863
+        </a>
+        <a href="tel:0762688939" class="hotline-btn phone">
+            <img src="image/dt.jpg" alt="Phone"> 0762688939
+        </a>
+    </div>
+
+    <script>
+        // Animation when scrolling
+        window.addEventListener('scroll', () => {
+            const cards = document.querySelectorAll('.value-card, .info-card');
+            cards.forEach(card => {
+                const cardTop = card.getBoundingClientRect().top;
+                const cardVisible = 150;
+                
+                if (cardTop < window.innerHeight - cardVisible) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        // Initialize cards as hidden
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.value-card, .info-card');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s ease';
+            });
+        });
+    </script>
+</body>
+</html>

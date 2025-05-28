@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Giỏ hàng</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body { 
+      background-color: #f5f7fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    nav { 
+      background-color: #2c3e50;
+      padding: 15px 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    nav ul { 
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    nav li { 
+      margin-right: 30px;
+      position: relative;
+    }
+    
+    nav a { 
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      padding: 10px 15px;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+    
+    nav a:hover { 
+      background-color: #34495e;
+    }
+    
+    .dropdown { 
+      display: none;
+      position: absolute;
+      background: white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      padding: 10px 0;
+      min-width: 200px;
+      top: 100%;
+      left: 0;
+      z-index: 1000;
+    }
+    
+    .dropdown a { 
+      display: block;
+      color: #333;
+      padding: 10px 20px;
+      border-radius: 0;
+    }
+    
+    .dropdown a:hover { 
+      background-color: #f8f9fa;
+    }
+    
+    li:hover .dropdown { 
+      display: block;
+    }
+    
+    .sub-dropdown { 
+      display: none;
+      position: absolute;
+      left: 100%;
+      top: 0;
+      background: white;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      padding: 10px 0;
+      min-width: 180px;
+    }
+    
+    .dropdown li:hover .sub-dropdown { 
+      display: block;
+    }
+
+    .nav-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      font-size: 32px;
+      margin: 40px 0;
+      font-weight: 700;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .cart-container {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      margin-bottom: 30px;
+    }
+
+    table { 
+      width: 100%;
+      border-collapse: collapse;
+    }
+    
+    th {
+      background-color: #34495e;
+      color: white;
+      padding: 15px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+    
+    td { 
+      padding: 15px;
+      text-align: center;
+      color: #333;
+      border-bottom: 1px solid #eee;
+    }
+
+    tr:hover td {
+      background-color: #f8f9fa;
+    }
+    
+    img { 
+      max-width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    button { 
+      padding: 8px 15px;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+      font-weight: 500;
+      transition: background-color 0.3s ease;
+    }
+    
+    button:hover { 
+      background-color: #c0392b;
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .quantity-controls button {
+      width: 30px;
+      height: 30px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: bold;
+      background-color: #3498db;
+    }
+
+    .quantity-controls button:hover {
+      background-color: #2980b9;
+    }
+
+    .quantity-controls input {
+      width: 50px;
+      padding: 5px;
+      text-align: center;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .quantity-controls input:focus {
+      outline: none;
+      border-color: #3498db;
+    }
+
+    .remove-btn {
+      background-color: #e74c3c !important;
+      padding: 8px 12px !important;
+    }
+
+    .remove-btn:hover {
+      background-color: #c0392b !important;
+    }
+    
+    .total { 
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      text-align: right;
+      font-weight: bold;
+      font-size: 20px;
+      color: #2c3e50;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      margin-bottom: 30px;
+    }
+
+    .navigation-links {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .navigation-links a {
+      color: #3498db;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      padding: 10px 20px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+      border: 2px solid #3498db;
+    }
+
+    .navigation-links a:hover {
+      background-color: #3498db;
+      color: white;
+    }
+
+    .empty-cart {
+      text-align: center;
+      padding: 60px 20px;
+      color: #666;
+    }
+
+    .empty-cart h3 {
+      font-size: 24px;
+      margin-bottom: 15px;
+      color: #2c3e50;
+    }
+
+    .empty-cart p {
+      font-size: 16px;
+      margin-bottom: 30px;
+    }
+
+    .empty-cart a {
+      background-color: #3498db;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      display: inline-block;
+    }
+
+    .empty-cart a:hover {
+      background-color: #2980b9;
+    }
+
+    .cart-icon {
+      position: relative;
+    }
+
+    .cart-icon div {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    #cart-count {
+      background-color: #e74c3c;
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 12px;
+      font-weight: bold;
+      min-width: 18px;
+      text-align: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .nav-right {
+        margin-left: 0;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      h1 {
+        font-size: 24px;
+        margin: 20px 0;
+      }
+
+      table {
+        font-size: 14px;
+      }
+
+      th, td {
+        padding: 10px 5px;
+      }
+
+      .navigation-links {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .quantity-controls {
+        flex-direction: column;
+        gap: 5px;
+      }
+    }
+  </style>
+  <link rel="icon" type="image/png" href="image/logo 2.png">
+</head>
+<body>
+  <nav>
+    <ul>
+        <li><a href="index.html">Trang chủ</a></li>
+        <li><a href="introduction.html">Giới thiệu</a></li>
+        <li>
+            <a href="#">Sản phẩm</a>
+            <ul class="dropdown">
+                <li><a href="#" onclick="filterCategory('featured')">Dụng cụ nổi bật</a></li>
+                <li><a href="#" onclick="filterCategory('yoga')">Dụng cụ Yoga</a></li>
+                <li>
+                    <a href="#">Môn thể thao ▾</a>
+                    <ul class="sub-dropdown">
+                        <li><a href="#" onclick="filterCategory('badminton')">Cầu lông</a></li>
+                        <li><a href="#" onclick="filterCategory('football')">Bóng đá</a></li>
+                        <li><a href="#" onclick="filterCategory('tabletennis')">Bóng bàn</a></li>
+                        <li><a href="#" onclick="filterCategory('volleyball')">Bóng chuyền</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        <li><a href="khuyenmai.html">Khuyến mãi</a></li>
+        <li><a href="lienhe.html">Liên hệ</a></li>
+        <ul class="nav-right">
+            <li class="cart-icon">
+                <div>
+                    🛒 <a href="cart.html">Giỏ hàng <span id="cart-count"></span></a>
+                </div>
+            </li>
+            <li><a href="login.html">Đăng nhập</a></li>
+        </ul>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <h1>Giỏ hàng của bạn 🛒</h1>
+    
+    <div class="cart-container">
+      <table id="cart-table">
+        <thead>
+          <tr>
+            <th>Ảnh</th>
+            <th>Sản phẩm</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+            <th>Hành động</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <div class="total" id="total-price">Tổng cộng: 0đ</div>
+    
+    <div class="navigation-links">
+      <a href="index.html">← Quay lại mua sắm</a>
+      <a href="login.html">Thanh toán →</a>
+    </div>
+  </div>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const tbody = document.querySelector("#cart-table tbody");
+    const totalPriceEl = document.getElementById("total-price");
+
+    function formatPrice(price) {
+      return price.toLocaleString() + "đ";
+    }
+
+    function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const totalItems = cart.reduce((sum, item) => {
+        if (item.id && item.name && item.price && item.image && item.quantity) {
+            return sum + (item.quantity || 0);
+        }
+        return sum;
+    }, 0);
+    const cartCountEl = document.getElementById("cart-count");
+    if (cartCountEl) {
+        cartCountEl.textContent = totalItems > 0 ? `(${totalItems})` : "";
+    } else {
+        console.warn("Cart count element not found");
+    }
+}
+
+   function renderCart() {
+    tbody.innerHTML = "";
+    let total = 0;
+
+    if (!cart || cart.length === 0) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="6" class="empty-cart">
+                    <h3>Giỏ hàng trống</h3>
+                    <p>Bạn chưa có sản phẩm nào trong giỏ hàng</p>
+                    <a href="index.html">Bắt đầu mua sắm</a>
+                </td>
+            </tr>
+        `;
+        totalPriceEl.textContent = "Tổng cộng: 0đ";
+        updateCartCount();
+        return;
+    }
+
+    cart.forEach((item, index) => {
+        if (!item.id || !item.name || !item.price || !item.image || !item.quantity) {
+            console.warn("Invalid cart item at index", index, item);
+            return;
+        }
+        const subtotal = item.price * item.quantity;
+        total += subtotal;
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td><img src="${item.image}" alt="${item.name}"></td>
+            <td style="font-weight: 600;">${item.name}</td>
+            <td style="font-weight: 600; color: #3498db;">${formatPrice(item.price)}</td>
+            <td>
+                <div class="quantity-controls">
+                    <button onclick="updateQuantity(${index}, -1)">-</button>
+                    <input type="number" value="${item.quantity}" min="1" onchange="updateQuantity(${index}, this.value)">
+                    <button onclick="updateQuantity(${index}, 1)">+</button>
+                </div>
+            </td>
+            <td style="font-weight: 700; font-size: 16px;">${formatPrice(subtotal)}</td>
+            <td><button class="remove-btn" onclick="removeItem(${index})">Xóa</button></td>
+        `;
+        tbody.appendChild(row);
+    });
+
+    totalPriceEl.textContent = "Tổng cộng: " + formatPrice(total);
+    updateCartCount();
+}
+
+    function updateQuantity(index, value) {
+        let newQuantity;
+        if (typeof value === 'number') {
+            newQuantity = cart[index].quantity + value;
+        } else {
+            newQuantity = parseInt(value);
+        }
+        if (newQuantity < 1 || isNaN(newQuantity)) {
+            newQuantity = 1;
+        }
+        cart[index].quantity = newQuantity;
+        localStorage.setItem("cart", JSON.stringify(cart));
+        renderCart();
+    }
+
+    function removeItem(index) {
+        if (confirm("Bạn có chắc muốn xóa sản phẩm này khỏi giỏ hàng?")) {
+            cart.splice(index, 1);
+            localStorage.setItem("cart", JSON.stringify(cart));
+            renderCart();
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        renderCart();
+        updateCartCount();
+    });
+  </script>
+</body>
+</html>
